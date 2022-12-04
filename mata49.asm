@@ -27,8 +27,6 @@ CMAIN:
     mov al, "m"
     PRINT_STRING "Letras m: "
     call contaletra
-    mov edi, invertido
-    mov word [edi],0
     call inverte
     call tiraespaco
     call mudamaiusculaminuscula
@@ -50,15 +48,28 @@ part:
     ret
     
 inverte:
-    std     ;seta a direction flag para decrementar
-    lodsb   ;le a partir do fim da string
-    cld     ;seta a direction flag para incrementar
-    stosb   ;armazena a partir do início da string
-    dec ecx
-    jnz inverte ;jump if not zero
-    cld     ;reseta a direction flag
+    mov edi, invertido
+    mov esi, frase
+    mov ecx, 0
+    
+   pushinverte:
+    lodsb
+    cmp al, 0
+    jz cleaninverte
+    push eax 
+    inc ecx
+    jmp pushinverte
+    
+   cleaninverte:
+    pop eax
+    stosb
+    loop cleaninverte
+    mov al, 0 
+    stosb
+    
     PRINT_STRING "3 -"
     NEWLINE
+    
     PRINT_STRING invertido
     NEWLINE
     ret
