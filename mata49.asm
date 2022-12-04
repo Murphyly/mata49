@@ -27,6 +27,8 @@ CMAIN:
     mov al, "m"
     PRINT_STRING "Letras m: "
     call contaletra
+    mov edi, invertido
+    mov word [edi],0
     call inverte
     call tiraespaco
     call mudamaiusculaminuscula
@@ -44,9 +46,6 @@ part:
     
     PRINT_STRING substr
     NEWLINE
-    mov edi, invertido
-    mov word [edi],0
-    ;add esi, 12
     mov ecx, 300
     ret
     
