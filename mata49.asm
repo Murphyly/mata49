@@ -32,8 +32,8 @@ part:
     
     PRINT_STRING substr
     NEWLINE
+    start:
     mov edi, invertido
-    add esi, 12
     mov ecx, 62
     ret
     
@@ -44,12 +44,13 @@ inverte:
     stosb   ;armazena a partir do início da string
     dec ecx
     jnz inverte ;jump if not zero
-    cld     ;reseta a direction flag
+    mov word [edi],0
     PRINT_STRING "3 -"
     NEWLINE
     PRINT_STRING invertido
     NEWLINE
     ret
+end 
 
     
     
