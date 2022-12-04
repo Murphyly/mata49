@@ -23,6 +23,9 @@ CMAIN:
     mov ecx, 41    ;tamanho da substring a ser retirada
     rep movsb
     
+    PRINT_STRING "1 -"
+    NEWLINE
+    
     PRINT_STRING substr
     NEWLINE
     mov edi, invertido
