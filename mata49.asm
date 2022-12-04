@@ -8,8 +8,7 @@ invertido resb 62
 section .text
 global CMAIN
 CMAIN:
-    mov ebp, esp; for correct debugging
-    ;write your code here
+    mov ebp, esp
     xor eax, eax
     xor ebx, ebx
     xor ecx, ecx
@@ -17,6 +16,11 @@ CMAIN:
     xor edi, edi
 
     GET_STRING frase, 62
+    call part 
+    call inverte
+    ret 
+    
+part:
     mov esi, frase
     add esi, 7     ;inicio da substring a ser retirada
     mov edi, substr
@@ -29,22 +33,23 @@ CMAIN:
     PRINT_STRING substr
     NEWLINE
     mov edi, invertido
+    add esi, 12
     mov ecx, 62
-
-    std
-    lodsb   ;volta para o último caractere da string retirada
+    ret
+    
 inverte:
     std     ;seta a direction flag para decrementar
     lodsb   ;le a partir do fim da string
     cld     ;seta a direction flag para incrementar
     stosb   ;armazena a partir do início da string
     dec ecx
-    jnz inverte
+    jnz inverte ;jump if not zero
     cld     ;reseta a direction flag
     PRINT_STRING "3 -"
     NEWLINE
     PRINT_STRING invertido
     NEWLINE
+    ret
 
     
     
