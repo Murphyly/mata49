@@ -83,32 +83,30 @@ tiraespaco:
     PRINT_STRING "4 - "
     NEWLINE
     mov ecx, 0
-    mov esi, substr ; a frase concatenada
-    mov edi, concatenada
+    mov esi, substr ; a frase a ser concatenada, vinda da questão 1
+    mov edi, concatenada; onde vai ficar a frase concatenada
 looper:   
-    lodsb
-    cmp al, " "
-    je cortaespaco
-    stosb
+    lodsb ; coloca letra apontada por edi em al e incrementa
+    cmp al, " " ; verifica se a letra é um espaço
+    je cortaespaco ; se for espaço pula a parte de colocar a letra na nova string
+    stosb ; colocar letra na string
 cortaespaco:
     inc ecx
-    cmp ecx, 300
-    jne vaivoltar
-    PRINT_STRING concatenada
+    cmp ecx, 300 ; ecx so vai até a quantidade definida para a frase
+    jne looper ; se ecx não chegou ao máximo passa para a próxima letra
+    PRINT_STRING concatenada ; imprime a nova string
     NEWLINE
     ret
-vaivoltar:
-    jmp looper
     
     
 mudamaiusculaminuscula:
     PRINT_STRING "5 - "
     NEWLINE
     mov ecx, 0
-    mov esi, substr
-    mov edi, frasenova
+    mov esi, substr ;a nova frase vai ser feita da substring
+    mov edi, frasenova ;frase que terá letras maiusculas e minusculas
 novasequencia:
-    call transformamaiuscula
+    call transformamaiuscula ; segue a sequencia de 2 maiusculas e 3 minusculas, colocando cada uma retornada na funcao para a nova frase
     stosb
     call transformamaiuscula
     stosb
@@ -118,22 +116,22 @@ novasequencia:
     stosb
     call transformaminuscula
     stosb
-    cmp ecx, 300
+    cmp ecx, 300 ;se ecx ainda estiver contando dentro da string, reinicia a sequencia de maiusculas e minusculas
     jl novasequencia
-    PRINT_STRING frasenova
+    PRINT_STRING frasenova ; quando verificar toda a string imprime a frase nova
     ret
     
     
 transformamaiuscula:
-    lodsb
-    cmp ecx, 300
+    lodsb ; coloca a letra de esi em al e depois incrementa
+    cmp ecx, 300; precisa ver se ecx ja passou da string para não considerar strings nos próximos endereços
     jge volta1
     inc ecx
-    cmp al, " "
+    cmp al, " " ; se al for espaço é necessário rodar de novo essa procedure, e colocar o espaço na nova frase, pois o espaço não conta para a sequencia
     je temespaco
-    cmp al, "a"
+    cmp al, "a" ; compara al com a primeira letra minuscula, pois em ASCII as maiúsculas possuem numeros menores, portanto algoritmo so serve para frases contendo apenas letras e espaços
     jl volta1
-    sub al, 20h
+    sub al, 20h; 20 hexadecimal é a diferença entre uma letra minúscula e sua equivalente maiúscula na tabela ASCII 
 volta1:
     ret
 temespaco:
@@ -147,8 +145,8 @@ transformaminuscula:
     cmp al, " "
     je temespaco2
     cmp al, "a"
-    jge volta2
-    add al, 20h
+    jge volta2 ; comparação agora é para maior igual, pois letras maiusculas serão transformadas em minusculas.
+    add al, 20h ; adição no lugar de subtração, pois maiúsculas são menores.
 volta2:
     ret
 temespaco2:
