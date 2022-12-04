@@ -41,7 +41,8 @@ inverte:
     dec ecx
     jnz inverte
     cld     ;reseta a direction flag
-    
+    PRINT_STRING "3 -"
+    NEWLINE
     PRINT_STRING invertido
     NEWLINE
 
