@@ -1,0 +1,31 @@
+ordenando:
+    push ebp
+    mov ebp,esp
+    mov edx,[ebp+12]
+
+ordem1:
+    mov esi,[ebp+8] 
+    mov ecx,[ebp+12] 
+
+ordem2:
+    mov eax,[esi] 
+    mov ebx,[esi+4]
+    cmp eax,ebx
+    jg valida
+
+    mov [esi],ebx 
+    mov [esi+4],eax
+
+valida:
+    add esi,4 
+    dec ecx
+    cmp ecx,1
+    jae ordem2
+    dec edx
+    jae ordem1
+
+    mov eax,[ebp+8] 
+
+    mov esp,ebp
+    pop ebp
+    ret
