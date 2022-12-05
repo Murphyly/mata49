@@ -1,7 +1,12 @@
+;Integrantes da equipe - MATA49 - T1 - Programação de Software Básico
+; Matheus Costa Pinto Marçal
+; Isys Nogueira de Sant'Anna
+; Gabriel Trindade
+
 %include "io.inc"
 
 section .bss
-frase resb 300
+frase resb 300 
 concatenada resb 300
 substr resb 300
 invertido resb 300
@@ -10,16 +15,16 @@ frasenova resb 300
 section .text
 global CMAIN
 CMAIN:
-    mov ebp, esp
-    xor eax, eax
+    mov ebp, esp ; Inicialização
+    xor eax, eax ; zerando os registradores
     xor ebx, ebx
     xor ecx, ecx
     xor esi, esi
     xor edi, edi
 
-    GET_STRING frase, 300
-    call part 
-    mov al, "a"
+    GET_STRING frase, 300 ; Recebe a frase a ser processada
+    call part  ; Chama a procedure da primeira questão de pegar uma substring do conjunto de palavras
+    mov al, "a" ; inicialização da segunda questão
     PRINT_STRING "2 -"
     NEWLINE
     PRINT_STRING "Letras a: "
@@ -53,16 +58,16 @@ inverte:
     mov ecx, 0
     
    pushinverte:
-    lodsb
-    cmp al, 0
-    jz cleaninverte
-    push eax 
+    lodsb ; Copia em AL o byte localizado no endereço padrão DS:SI.
+    cmp al, 0 ; Verifica se a sting chegou ao fim e envia para limpar a pilha com o pop
+    jz cleaninverte ; 
+    push eax ; realiza push na pilha 
     inc ecx
     jmp pushinverte
     
    cleaninverte:
-    pop eax
-    stosb
+    pop eax ; limpa a pilha, realizando o pop
+    stosb ; Armazena o byte em AL no endereço padrão ES:DI.
     loop cleaninverte
     mov al, 0 
     stosb
@@ -163,6 +168,4 @@ volta2:
 temespaco2:
     stosb
     jmp transformaminuscula
-    
-    
-    
+    ret
